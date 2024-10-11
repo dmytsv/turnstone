@@ -29,7 +29,7 @@
 
     boardState[boardState.length - 1][0] = {...greenPieceDefaults}
     boardState[boardState.length - 1][2] = {...greenPieceDefaults}
-    boardState[boardState.length - 1][4] = {...greenPieceDefaults, power: 6}
+    boardState[boardState.length - 1][4] = {...greenPieceDefaults}
 
     
     // View
