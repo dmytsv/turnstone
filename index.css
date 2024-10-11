@@ -1,0 +1,94 @@
+:root {
+    --side: 10vmin;
+    --color: pink;
+    --border: purple;
+    --top: 3vmin;
+    --left: 40vmin;
+}
+
+#board {
+    --color: gray;
+    position: relative;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+}
+div.buttons {
+    display: none;
+}
+.nav > .switch > input:checked + div.buttons {
+    display: inline-block;
+}
+
+
+.hexagon {
+    position: absolute;
+    width: calc(var(--side) * .5);
+    height: calc(var(--side) * 1.85);
+    top: var(--top);
+    left: var(--left);
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.hexagon > .power {
+    height: calc(var(--side) * .6);
+    width: calc(var(--side) * .6);
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    top: var(--side);
+}
+
+.hexagon > .power > i {
+    border-radius: 50%;
+    display: block;
+    height: calc(var(--side) * .2);
+    width: calc(var(--side) * .2);
+    background-color: var(--border);
+}
+
+.hexagon i.side {
+    background: var(--color);
+    display: block;
+    height: var(--side);
+    width: var(--side);
+    margin: 0;
+    box-sizing: border-box;
+    transform-origin: center;
+}
+
+.hexagon.shield::before {
+    content: '';
+    position: absolute;
+    display: block;
+    height: 0;
+    width: 0;
+    border-bottom: calc(var(--side) * .1) solid var(--border);
+    border-left: calc(var(--side) * .1) solid transparent;
+    border-right: calc(var(--side) * .1) solid transparent;
+    border-top: 0;
+    transform: translate(calc(var(--side) * .143), calc(var(--side) * -0.045));
+    transform-origin: center;
+}
+.hexagon.shield i.side.top.piece {
+    border-top: calc(var(--side) * .1) solid var(--border);
+    border-right: calc(var(--side) * .1) solid var(--border);
+}
+.hexagon.shield i.side.left.piece {
+    border-left: calc(var(--side) * .1) solid var(--border);
+}
+
+
+.hexagon i.side.top {
+    transform: translate(0, 0) rotate(-15deg) skew(15deg, 15deg);
+}
+.hexagon i.side.left {
+    transform: translate(calc(var(--side) * -0.775), calc(var(--side) * -0.553)) rotate(45deg) skew(15deg, 15deg);
+}
+.hexagon i.side.right {
+    transform: translate(0, calc(var(--side) * -1.105)) rotate(-75deg) skew(15deg, 15deg);
+}

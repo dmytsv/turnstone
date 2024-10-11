@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turnstone</title>
+    <link rel="stylesheet" href="./index.css" />
+    <script defer src="./index.js"></script>
+</head>
+<body>
+    <div class="nav">
+        <div class="switch">
+            <label for="turn" id="turnlabel">Move</label>
+            <input type="checkbox" name="turn" id="turn">
+            <div class="buttons">
+                <button class="turnbutton left">&#8592; Counter Clockwise &#8592;</button>
+                <button class="turnbutton right">&#8594; Clockwise &#8594;</button>
+            </div>
+        </div>
+        <button id="end">End Turn</button>
+        <div id="moveindicator">Current Player: Red</div>
+    </div>
+    <div id="board"></div>
+    <!-- <div class="hexagon shield">
+        <i class="side piece top"></i>
+        <i class="side piece left"></i>
+        <i class="side piece right"></i>
+        <div class="power">
+            <i></i>
+            <i></i>
+            <i></i>
+            <i></i>
+            <i></i>
+            <i></i>
+        </div>
+    </div> -->
+</body>
+</html>
