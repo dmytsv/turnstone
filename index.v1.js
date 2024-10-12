@@ -11,7 +11,6 @@
     let currentPlayer = {side: RED, color: RED_COLOR};
     let isTurning = false
     let didTurn = false;
-    let is
     let activePiece = null;
     let moveInProgress = false;
     let powerSpent = 0;
