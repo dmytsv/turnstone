@@ -91,6 +91,7 @@ body {
 }
 .hexagon.shield i.side.left.piece {
     border-left: calc(var(--side) * .1) solid var(--border);
+    border-bottom: calc(var(--side) * .1) solid var(--color);
 }
 
 
