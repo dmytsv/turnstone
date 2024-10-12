@@ -6,22 +6,33 @@
     --left: 40vmin;
 }
 
+body {
+    font-family: "Google Sans",Roboto,Arial,sans-serif;
+}
+
 #board {
     --color: gray;
     position: relative;
+    left: var(--leftmargin);
 }
 
 .nav {
     display: flex;
     justify-content: space-between;
-}
-div.buttons {
-    display: none;
-}
-.nav > .switch > input:checked + div.buttons {
-    display: inline-block;
+    align-items: center;
+    padding: 0.1rem 3rem;
 }
 
+.gameinfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#moveindicator {
+    text-transform: capitalize;
+    margin: .3rem;
+}
 
 .hexagon {
     position: absolute;

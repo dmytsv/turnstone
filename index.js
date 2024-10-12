@@ -1,4 +1,4 @@
-// ;(() => {
+;(() => {
     // Game State
     const BOARD_WIDTH = 5;
     const BOARD_HEIGHT = 4;
@@ -9,7 +9,6 @@
     const GREEN_COLOR = 'green';
 
     let currentPlayer = {side: RED, color: RED_COLOR};
-    let turningMoveInProcess = false;
     let isTurning = false
     let didTurn = false;
     let is
@@ -38,13 +37,11 @@
     const TOP_BUFFER = CELL_SIZE / 8;
     const SIDE_BUFFER = CELL_SIZE;
     const moveIndicator = document.querySelector('#moveindicator');
-    const turnSwitch = document.querySelector('#turn');
     const turnLabel = document.querySelector('#turnlabel');
     const turnLeft = document.querySelector('.turnbutton.left');
     const turnRight = document.querySelector('.turnbutton.right');
     const endTurn = document.querySelector('#end');
     turnLeft.addEventListener('click',() => {
-        console.log(didTurn, activePiece)
         if (didTurn) return;
         if (!activePiece) return;
         isTurning = true;
@@ -60,7 +57,6 @@
         calculateSteps(activePiece[0], state)
     })
     turnRight.addEventListener('click',() => {
-        console.log(didTurn, activePiece)
         if (didTurn) return;
         if (!activePiece) return;
         isTurning = true;
@@ -81,32 +77,35 @@
         moveInProgress = false;
         powerSpent = 0;
         possibleSteps = [];
-        turningMoveInProcess = false;
-        if (didTurn) {
-            turnSwitch.disabled = false;
-        }
         didTurn = false;
-        if (turnSwitch.checked) {
-            turnSwitch.click();
-        }
+        isTurning = false;
 
         currentPlayer = currentPlayer.side === RED ? {side: GREEN, color: GREEN_COLOR} : {side: RED, color: RED_COLOR};
+        moveIndicator.innerHTML = `Current Player: <span style="color: ${currentPlayer.color};" class="playerinfo">${currentPlayer.side}</span>`
         render();
     })
-    turnSwitch.addEventListener('change', _ => {
-        
 
-        if (turnSwitch.checked) {
-            turnLabel.innerText = 'Turn'
-        } else {
-            turnLabel.innerText = 'Move'
-            if (turningMoveInProcess) {
-                didTurn = true;
-            }
-        }
-        turningMoveInProcess = turnSwitch.checked;
-    })
     const board = document.querySelector('#board');
+    function centerTheBoard() {
+        const winWidth = window.innerWidth;
+        const winHeight = window.innerHeight;
+        const cellSize = Math.min(winWidth, winHeight) / (BOARD_WIDTH);
+        const boardSize = cellSize * BOARD_WIDTH;
+        const margin = (winWidth - boardSize) / 2
+        board.style.setProperty('--leftmargin', `${margin}px`)
+    }
+    centerTheBoard();
+    let throttle = null;
+    window.addEventListener('resize', () => {
+        if (throttle) {
+            cancelAnimationFrame(throttle);
+            throttle = null;
+        }
+        throttle = requestAnimationFrame(() => {
+            centerTheBoard();
+            throttle = null;
+        })
+    })
     board.addEventListener('click', event => {
 
         let element = event.target;
@@ -184,7 +183,6 @@
     }
 
     function calculateSteps(start, currentState) {
-        // const [rIdx, cIdx] = start;
         const {power, direction} = currentState;
         let [incI, incJ] = [0,0]
         if (direction === 0 || direction === 3) {
@@ -268,31 +266,32 @@
             calculateSteps([rIdx, cIdx], cellState)
         } else if (activePiece) {
             moveInProgress = true;
-            if (turningMoveInProcess) {
-                // turning logic
-            } else {
-                const [i, j] = activePiece[0]
-                const destination = possibleSteps.find(step => step.cell.join(',') === [rIdx, cIdx].join(','));
-                console.log(destination)
-
-                if (!destination) {
-                    window.alert('cannot play there')
-                    return
-                }
-                const {powerAdj, capture} = destination;
-                powerSpent += destination.powerSpent;
-                const state = boardState[i][j];
-                activePiece[0] = [rIdx, cIdx];
-                if (capture) {
-                    state.power += powerAdj;
-                    turnSwitch.click();
-                }
-                boardState[i][j] = {}
-                boardState[rIdx][cIdx] = state;
-                calculateSteps([rIdx, cIdx], state)
-                render()
+            if (isTurning) {
+                didTurn = true;
+                isTurning = false;
             }
+
+            const [i, j] = activePiece[0]
+            const destination = possibleSteps.find(step => step.cell.join(',') === [rIdx, cIdx].join(','));
+
+            if (!destination) {
+                window.alert('cannot play there')
+                return
+            }
+            const {powerAdj, capture} = destination;
+            powerSpent += destination.powerSpent;
+            const state = boardState[i][j];
+            activePiece[0] = [rIdx, cIdx];
+            if (capture) {
+                state.power += powerAdj;
+                powerSpent = state.power;
+            }
+            boardState[i][j] = {}
+            boardState[rIdx][cIdx] = state;
+            calculateSteps([rIdx, cIdx], state)
+            render()
+            
         }
     }
     render();
-// })();
+})();

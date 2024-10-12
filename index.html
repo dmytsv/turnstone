@@ -4,35 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Turnstone</title>
+    <link rel="stylesheet" href="./vendor.css" />
     <link rel="stylesheet" href="./index.css" />
     <script defer src="./index.js"></script>
 </head>
 <body>
     <div class="nav">
-        <div class="switch">
-            <label for="turn" id="turnlabel">Move</label>
-            <input type="checkbox" name="turn" id="turn">
-            <div class="buttons">
-                <button class="turnbutton left">&#8592; Counter Clockwise &#8592;</button>
-                <button class="turnbutton right">&#8594; Clockwise &#8594;</button>
-            </div>
+        <button class="turnbutton left button-light"><div id="curvedarrow" class="left"></div> Counter Clockwise</button>
+        <div class="gameinfo">
+            <h2 id="moveindicator">Current Player: <span style="color: red" class="playerinfo">Red</span></h2>
+            <button id="end" class="button-stop">End Turn</button>
         </div>
-        <button id="end">End Turn</button>
-        <div id="moveindicator">Current Player: Red</div>
+        <button class="turnbutton right button-light">Clockwise <div id="curvedarrow"></div></button>
     </div>
-    <div id="board"></div>
-    <!-- <div class="hexagon shield">
-        <i class="side piece top"></i>
-        <i class="side piece left"></i>
-        <i class="side piece right"></i>
-        <div class="power">
-            <i></i>
-            <i></i>
-            <i></i>
-            <i></i>
-            <i></i>
-            <i></i>
-        </div>
-    </div> -->
+    <div class="container">
+        <div id="board"></div>
+    </div>
 </body>
 </html>
